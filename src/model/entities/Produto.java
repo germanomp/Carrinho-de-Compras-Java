@@ -47,6 +47,7 @@ public class Produto {
     }
 
     public Double getValor() {
+
         return valor;
     }
 
