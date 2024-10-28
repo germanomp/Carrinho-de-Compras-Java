@@ -1,0 +1,88 @@
+package model.entities;
+
+import java.util.Objects;
+
+public class Carrinho {
+
+    private Long id;
+    private String nome;
+    private String categoria;
+    private Double valor;
+    private Integer quantidade;
+    private Double valorTotal;
+
+    public Carrinho() {}
+
+    public Carrinho(String nome, String categoria, Double valor, Integer quantidade, Double valorTotal) {
+        this.nome = nome;
+        this.categoria = categoria;
+        this.valor = valor;
+        this.quantidade = quantidade;
+        this.valorTotal = valorTotal;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public Double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Carrinho carrinho = (Carrinho) o;
+        return Objects.equals(id, carrinho.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Carrinho{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", valor=" + valor +
+                ", quantidade=" + quantidade +
+                ", valorTotal=" + valorTotal +
+                '}';
+    }
+}
