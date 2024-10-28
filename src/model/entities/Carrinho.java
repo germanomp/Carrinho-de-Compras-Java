@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Carrinho {
 
-    private Long id;
+    private Integer id;
     private String nome;
     private String categoria;
     private Double valor;
@@ -13,12 +13,21 @@ public class Carrinho {
 
     public Carrinho() {}
 
-    public Carrinho(String nome, String categoria, Double valor, Integer quantidade, Double valorTotal) {
+    public Carrinho(Integer id, String nome, String categoria, Double valor, Integer quantidade, Double valorTotal) {
+        this.id = id;
         this.nome = nome;
         this.categoria = categoria;
         this.valor = valor;
         this.quantidade = quantidade;
         this.valorTotal = valorTotal;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
