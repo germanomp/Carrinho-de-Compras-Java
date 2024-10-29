@@ -16,15 +16,21 @@ public class Programa {
         //estoqueDao.inserir(novoProduto);
         //System.out.println("Produto inserido. ID = " + novoProduto.getId());
 
+        /*
         System.out.println("alterar produto estoque");
         Produto produto = estoqueDao.buscarPorId(2);
         if (produto != null) {
-            produto.setValor(2000.0);
+            produto.setValor(2500.0);
             estoqueDao.alterar(produto);
             System.out.println("Produto alterado com sucesso.");
         } else {
             System.out.println("Produto não encontrado.");
         }
+         */
+
+        System.out.println("=== Test 1: produto buscaPorId ===");
+        Produto produto = estoqueDao.buscarPorId(2);
+        System.out.println(produto);
 
     }
 

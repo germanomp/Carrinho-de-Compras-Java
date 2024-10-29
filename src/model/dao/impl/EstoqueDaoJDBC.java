@@ -86,12 +86,7 @@ public class EstoqueDaoJDBC implements EstoqueDao {
 
             rs = st.executeQuery();
             if (rs.next()) {
-                Produto produto = new Produto();
-                produto.setId(rs.getInt("id"));
-                produto.setNome(rs.getString("nome"));
-                produto.setCategoria(rs.getString("categoria"));
-                produto.setValor(rs.getDouble("valor"));
-                produto.setQuantidade(rs.getInt("quantidade"));
+                Produto produto = instanciarProduto(rs);
                 return produto;
             }
             return null;
@@ -101,6 +96,16 @@ public class EstoqueDaoJDBC implements EstoqueDao {
             DB.closeStatement(st);
             DB.closeResultSet(rs);
         }
+    }
+
+    private Produto instanciarProduto(ResultSet rs) throws SQLException {
+        Produto produto = new Produto();
+        produto.setId(rs.getInt("id"));
+        produto.setNome(rs.getString("nome"));
+        produto.setCategoria(rs.getString("categoria"));
+        produto.setValor(rs.getDouble("valor"));
+        produto.setQuantidade(rs.getInt("quantidade"));
+        return produto;
     }
 
     @Override
