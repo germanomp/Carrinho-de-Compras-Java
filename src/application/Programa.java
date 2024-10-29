@@ -1,5 +1,6 @@
 package application;
 
+import model.dao.CarrinhoDao;
 import model.dao.DaoLoja;
 import model.dao.EstoqueDao;
 import model.entities.Produto;
@@ -13,6 +14,8 @@ public class Programa {
 
         EstoqueDao estoqueDao = DaoLoja.criarEstoqueDao();
 
+        CarrinhoDao carrinhoDao = DaoLoja.criarCarrinhoDao();
+
         Scanner sc = new Scanner(System.in);
 
 
@@ -21,6 +24,11 @@ public class Programa {
         for (Produto p : lista) {
             System.out.println(p);
         }
+
+        System.out.println("teste inserir produto carrinho");
+        Produto novoProduto = new Produto(null, "teste", "categoriateste", 200.0, 5);
+        carrinhoDao.inserir(novoProduto);
+        System.out.println("Produto inserido. ID = " + novoProduto.getId());
 
         //estoqueDao.inserir(new Produto(null, "Produto A", "Categoria A", 10.0, 5));
         //estoqueDao.inserir(new Produto(null, "Produto B", "Categoria B", 15.0, 2));
