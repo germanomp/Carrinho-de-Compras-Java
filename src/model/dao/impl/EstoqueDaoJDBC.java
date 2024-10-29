@@ -72,12 +72,22 @@ public class EstoqueDaoJDBC implements EstoqueDao {
     }
 
     @Override
-    public void remover(Produto produto) {
+    public void remover(Integer id) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("DELETE FROM estoque WHERE id = ?");
+            st.setInt(1, id);
 
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
-    public Produto buscarPorId(int id) {
+    public Produto buscarPorId(Integer id) {
         PreparedStatement st = null;
         ResultSet rs = null;
         try {

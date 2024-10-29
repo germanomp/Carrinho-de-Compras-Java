@@ -8,7 +8,7 @@ public interface EstoqueDao {
 
     void inserir(Produto produto);
     void alterar(Produto produto);
-    void remover(Produto produto);
-    Produto buscarPorId(int id);
+    void remover(Integer id);
+    Produto buscarPorId(Integer id);
     List<Produto> listarEstoque();
 }
