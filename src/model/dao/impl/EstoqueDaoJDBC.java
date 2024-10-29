@@ -52,7 +52,23 @@ public class EstoqueDaoJDBC implements EstoqueDao {
 
     @Override
     public void alterar(Produto produto) {
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("UPDATE estoque SET nome = ?, categoria = ?, valor = ?, quantidade = ? WHERE id = ?",
+                    PreparedStatement.RETURN_GENERATED_KEYS);
 
+            st.setString(1, produto.getNome());
+            st.setString(2, produto.getCategoria());
+            st.setDouble(3, produto.getValor());
+            st.setInt(4, produto.getQuantidade());
+            st.setInt(5, produto.getId());
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
@@ -62,7 +78,29 @@ public class EstoqueDaoJDBC implements EstoqueDao {
 
     @Override
     public Produto buscarPorId(int id) {
-        return null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement("SELECT * FROM estoque WHERE id = ?");
+            st.setInt(1, id);
+
+            rs = st.executeQuery();
+            if (rs.next()) {
+                Produto produto = new Produto();
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setCategoria(rs.getString("categoria"));
+                produto.setValor(rs.getDouble("valor"));
+                produto.setQuantidade(rs.getInt("quantidade"));
+                return produto;
+            }
+            return null;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
     }
 
     @Override
