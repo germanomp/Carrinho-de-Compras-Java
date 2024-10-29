@@ -1,14 +1,14 @@
 package model.dao;
 
-import model.entities.Produto;
+import model.entities.CarrinhoItem;
 
 import java.util.List;
 
 public interface CarrinhoDao {
-    void inserir(Produto produto);
-    void alterar(Produto produto);
-    void remover(Produto produto);
-    Produto buscarPorId(int id);
-    List<Produto> listarProdutos();
+
+    void adicionarProduto(CarrinhoItem produto);
+    void atualizarProduto(CarrinhoItem produto);
+    void removerProduto(Integer id);
+    List<CarrinhoItem> listarProdutos();
     double calcularTotal();
 }
