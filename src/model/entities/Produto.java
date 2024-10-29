@@ -1,9 +1,8 @@
 package model.entities;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class Produto implements Serializable {
+public class Produto {
 
     private Integer id;
     private String nome;

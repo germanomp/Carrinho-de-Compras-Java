@@ -1,9 +1,8 @@
 package model.entities;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class Estoque implements Serializable {
+public class Estoque {
 
     private Integer id;
     private String nome;
