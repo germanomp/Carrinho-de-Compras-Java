@@ -1,23 +1,23 @@
 package model.entities;
 
-import java.util.Objects;
-
-public class Estoque {
+public class Carrinho {
 
     private Integer id;
     private String nome;
     private String categoria;
     private Double valor;
     private Integer quantidade;
+    private Double valorTotal;
 
-    public Estoque() {}
+    public Carrinho() {}
 
-    public Estoque(Integer id, String nome, String categoria, Double valor, Integer quantidade) {
+    public Carrinho(Integer id, String nome, String categoria, Double valor, Integer quantidade) {
         this.id = id;
         this.nome = nome;
         this.categoria = categoria;
         this.valor = valor;
         this.quantidade = quantidade;
+        this.valorTotal = calcularValorTotal();
     }
 
     public Integer getId() {
@@ -50,6 +50,7 @@ public class Estoque {
 
     public void setValor(Double valor) {
         this.valor = valor;
+        this.valorTotal = calcularValorTotal();
     }
 
     public Integer getQuantidade() {
@@ -58,16 +59,26 @@ public class Estoque {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+        this.valorTotal = calcularValorTotal();
+    }
+
+    public Double getValorTotal() {
+        return valorTotal;
+    }
+
+    private Double calcularValorTotal() {
+        return this.valor * this.quantidade;
     }
 
     @Override
     public String toString() {
-        return "Estoque{" +
+        return "Carrinho{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", categoria='" + categoria + '\'' +
                 ", valor=" + valor +
                 ", quantidade=" + quantidade +
+                ", valorTotal=" + valorTotal +
                 '}';
     }
 }
