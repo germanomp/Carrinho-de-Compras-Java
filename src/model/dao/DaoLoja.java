@@ -8,4 +8,5 @@ public class DaoLoja {
     public static EstoqueDao criarEstoqueDao() {
         return new EstoqueDaoJDBC(DB.getConnection());
     }
+
 }

@@ -7,6 +7,7 @@ import model.entities.Produto;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class Programa {
     public static void main(String[] args) {
 
@@ -14,9 +15,6 @@ public class Programa {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("=== Test 1: produto buscaPorId ===");
-        Produto produto = estoqueDao.buscarPorId(2);
-        System.out.println(produto);
 
         System.out.println("\n=== Test 3: Listar todo o estoque ===");
         List<Produto> lista = estoqueDao.listarEstoque();
@@ -24,6 +22,13 @@ public class Programa {
             System.out.println(p);
         }
 
+        //estoqueDao.inserir(new Produto(null, "Produto A", "Categoria A", 10.0, 5));
+        //estoqueDao.inserir(new Produto(null, "Produto B", "Categoria B", 15.0, 2));
+
+
+        //System.out.println("=== Test 1: produto buscaPorId ===");
+        //Produto produto = estoqueDao.buscarPorId(2);
+        //System.out.println(produto);
 
         /*
         System.out.println("teste inserir produto estoque");
@@ -42,8 +47,6 @@ public class Programa {
             System.out.println("Produto não encontrado.");
         }
          */
-
-
 
         /*
         System.out.println("\n=== Test 6: deletar produto ===");
