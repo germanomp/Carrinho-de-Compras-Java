@@ -13,13 +13,13 @@ public class Produto {
 
     public Produto() {}
 
-    public Produto(Integer id, String nome, String categoria, Double valor, Integer quantidade, Double valorTotal) {
+    public Produto(Integer id, String nome, String categoria, Double valor, Integer quantidade) {
         this.id = id;
         this.nome = nome;
         this.categoria = categoria;
         this.valor = valor;
         this.quantidade = quantidade;
-        this.valorTotal = valorTotal;
+        calcularValorTotal();
     }
 
     public Integer getId() {
@@ -47,12 +47,12 @@ public class Produto {
     }
 
     public Double getValor() {
-
         return valor;
     }
 
     public void setValor(Double valor) {
         this.valor = valor;
+        calcularValorTotal();
     }
 
     public Integer getQuantidade() {
@@ -61,14 +61,15 @@ public class Produto {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+        calcularValorTotal();
     }
 
     public Double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(Double valorTotal) {
-        this.valorTotal = valorTotal;
+    private void calcularValorTotal() {
+        this.valorTotal = this.valor * this.quantidade;
     }
 
     @Override
