@@ -1,15 +1,15 @@
 package model.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Produto {
+public class Produto implements Serializable {
 
     private Integer id;
     private String nome;
     private String categoria;
     private Double valor;
     private Integer quantidade;
-    private Double valorTotal;
 
     public Produto() {}
 
@@ -19,7 +19,6 @@ public class Produto {
         this.categoria = categoria;
         this.valor = valor;
         this.quantidade = quantidade;
-        calcularValorTotal();
     }
 
     public Integer getId() {
@@ -52,7 +51,6 @@ public class Produto {
 
     public void setValor(Double valor) {
         this.valor = valor;
-        calcularValorTotal();
     }
 
     public Integer getQuantidade() {
@@ -61,15 +59,6 @@ public class Produto {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
-        calcularValorTotal();
-    }
-
-    public Double getValorTotal() {
-        return valorTotal;
-    }
-
-    private void calcularValorTotal() {
-        this.valorTotal = this.valor * this.quantidade;
     }
 
     @Override
@@ -87,13 +76,12 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Carrinho{" +
+        return "Produtos{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", categoria='" + categoria + '\'' +
                 ", valor=" + valor +
                 ", quantidade=" + quantidade +
-                ", valorTotal=" + valorTotal +
                 '}';
     }
 }

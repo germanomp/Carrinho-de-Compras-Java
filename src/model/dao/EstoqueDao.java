@@ -1,13 +1,14 @@
 package model.dao;
 
-import model.entities.Estoque;
+import model.entities.Produto;
 
 import java.util.List;
 
 public interface EstoqueDao {
-    void inserir(Estoque estoque);
-    void alterar(Estoque estoque);
-    void remover(Estoque estoque);
-    Estoque buscarPorId(int id);
-    List<Estoque> listarEstoque();
+
+    void inserir(Produto produto);
+    void alterar(Produto produto);
+    void remover(Produto produto);
+    Produto buscarPorId(int id);
+    List<Produto> listarEstoque();
 }
