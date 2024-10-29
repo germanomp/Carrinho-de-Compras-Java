@@ -2,8 +2,6 @@ package application;
 
 import model.dao.DaoLoja;
 import model.dao.EstoqueDao;
-import model.dao.ProdutoDao;
-import model.dao.impl.EstoqueDaoJDBC;
 import model.entities.Produto;
 
 import java.util.List;
