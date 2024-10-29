@@ -9,5 +9,6 @@ public interface CarrinhoDao {
     void inserir(Produto produto);
     void atualizarQuantidade(Produto produto);
     void remover(Integer id);
+    Produto buscarPorId(Integer id);
     List<Produto> listarCarrinho();
 }
