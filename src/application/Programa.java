@@ -6,6 +6,7 @@ import model.dao.ProdutoDao;
 import model.dao.impl.EstoqueDaoJDBC;
 import model.entities.Produto;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Programa {
@@ -14,6 +15,17 @@ public class Programa {
         EstoqueDao estoqueDao = DaoLoja.criarEstoqueDao();
 
         Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Test 1: produto buscaPorId ===");
+        Produto produto = estoqueDao.buscarPorId(2);
+        System.out.println(produto);
+
+        System.out.println("\n=== Test 3: Listar todo o estoque ===");
+        List<Produto> lista = estoqueDao.listarEstoque();
+        for (Produto p : lista) {
+            System.out.println(p);
+        }
+
 
         /*
         System.out.println("teste inserir produto estoque");
@@ -33,15 +45,15 @@ public class Programa {
         }
          */
 
-        System.out.println("=== Test 1: produto buscaPorId ===");
-        Produto produto = estoqueDao.buscarPorId(2);
-        System.out.println(produto);
 
+
+        /*
         System.out.println("\n=== Test 6: deletar produto ===");
         System.out.print("Digite o Id do produto a deletar: ");
         int id = sc.nextInt();
         estoqueDao.remover(id);
         System.out.println("removido");
+        */
 
         sc.close();
 
