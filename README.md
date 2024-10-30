@@ -73,6 +73,7 @@ Antes de executar a aplicação, você precisa configurar a conexão com o banco
    url=jdbc:mysql://127.0.0.1:3306/desafio
    useSSL=false
 
+2. **SQL para gerar as tabelas**
 -- Tabela Carrinho de Compras
 
 CREATE TABLE carrinho (
@@ -94,6 +95,6 @@ CREATE TABLE estoque (
     quantidade INT NOT NULL
 );
 
-Executar a Aplicação:
+## Executar a Aplicação:
 
 Compile e execute a classe Programa.java.
