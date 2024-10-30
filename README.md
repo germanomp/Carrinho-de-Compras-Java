@@ -72,6 +72,7 @@ CREATE DATABASE desafio;
 USE desafio;
 
 -- Tabela Carrinho de Compras
+
 CREATE TABLE carrinho (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -82,6 +83,7 @@ CREATE TABLE carrinho (
 );
 
 -- Tabela Estoque
+
 CREATE TABLE estoque (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
