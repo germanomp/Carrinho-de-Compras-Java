@@ -24,7 +24,12 @@ Este projeto é uma aplicação de gerenciamento de carrinho de compras, permiti
 
 ## Estrutura do Projeto
 
-src │ ├── application # Classe principal e menu da aplicação │ ├── model # Entidades do modelo │ ├── dao # Interfaces e implementações de acesso a dados │ └── entities # Classes que representam as entidades do sistema 
+src │ 
+    ├── app # Classe principal e menu da aplicação │ 
+    ├── modelo # Entidades do modelo │ 
+        ├── dao # Interfaces │ 
+        └── impl # Implementações de acesso a dados │ 
+        └── entidades # Classes que representam as entidades do sistema │ 
 
 ## Estrutura do Banco de Dados
 
@@ -69,6 +74,7 @@ Antes de executar a aplicação, você precisa configurar a conexão com o banco
    useSSL=false
 
 -- Tabela Carrinho de Compras
+
 CREATE TABLE carrinho (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -79,6 +85,7 @@ CREATE TABLE carrinho (
 );
 
 -- Tabela Estoque
+
 CREATE TABLE estoque (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
