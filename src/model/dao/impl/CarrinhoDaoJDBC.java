@@ -140,8 +140,6 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
         }
     }
 
-
-
     @Override
     public void remover(Integer id) {
         EstoqueDao estoqueDao = DaoLoja.criarEstoqueDao();
@@ -184,7 +182,6 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
             DB.closeResultSet(rs);
         }
     }
-
 
     @Override
     public Produto buscarPorId(Integer id) {
