@@ -57,23 +57,11 @@ src │
    git clone https://github.com/germanomp/Carrinho-de-Compras-Java.git
    cd Carrinho-de-Compras-Java
 
-Configurar o Banco de Dados:
+##Configurar o Banco de Dados:
 
 Crie um banco de dados em seu SGBD preferido e configure as tabelas necessárias (estoque e carrinho).
-## Configuração da Conexão com o Banco de Dados
 
-Antes de executar a aplicação, você precisa configurar a conexão com o banco de dados. Siga os passos abaixo para ajustar a classe de conexão conforme suas configurações:
-
-1. **Arquivo de Propriedades**
-   - Certifique-se de que o arquivo `db.properties` esteja na pasta correta do seu projeto. Esse arquivo deve conter as seguintes configurações:
-
-   ```properties
-   user=developer
-   password=1234567
-   url=jdbc:mysql://127.0.0.1:3306/desafio
-   useSSL=false
-
-2. **SQL para gerar as tabelas**
+**SQL para gerar as tabelas**
 -- Tabela Carrinho de Compras
 
 CREATE TABLE carrinho (
@@ -94,6 +82,19 @@ CREATE TABLE estoque (
     valor DECIMAL(10, 2) NOT NULL,
     quantidade INT NOT NULL
 );
+
+## Configuração da Conexão com o Banco de Dados
+
+Antes de executar a aplicação, você precisa configurar a conexão com o banco de dados. Siga os passos abaixo para ajustar a classe de conexão conforme suas configurações:
+
+1. **Arquivo de Propriedades**
+   - Certifique-se de que o arquivo `db.properties` esteja na pasta correta do seu projeto. Esse arquivo deve conter as seguintes configurações:
+
+   ```properties
+   user=developer
+   password=1234567
+   url=jdbc:mysql://127.0.0.1:3306/desafio
+   useSSL=false
 
 ## Executar a Aplicação:
 
