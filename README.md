@@ -22,14 +22,18 @@ Este projeto é uma aplicação de gerenciamento de carrinho de compras, permiti
 - JDBC para conexão com o banco de dados
 - MySQL (ou outro SGBD de sua escolha)
 
-## Estrutura do Projeto
-
-src │ 
-    ├── app # Classe principal e menu da aplicação │ 
-    ├── modelo # Entidades do modelo │ 
-        ├── dao # Interfaces │ 
-        └── impl # Implementações de acesso a dados │ 
-        └── entidades # Classes que representam as entidades do sistema │ 
+## Estrutura do Projeto    
+```plaintext
+Carrinho-de-Compras-Java/
+│
+├── app/                # Classe principal e menu da aplicação
+├── modelo/             # Entidades do modelo
+├── dao/                # Interfaces
+├── impl/               # Implementações de acesso a dados
+├── entidades           # Classes que representam as entidades do sistema
+├── db.properties       # Arquivo de conexão com o banco de dados
+└── README.md           # Este arquivo
+```
 
 ## Estrutura do Banco de Dados
 
