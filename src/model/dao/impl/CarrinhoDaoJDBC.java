@@ -115,21 +115,47 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
 
     @Override
     public void remover(Integer id) {
+        EstoqueDao estoqueDao = DaoLoja.criarEstoqueDao();
         PreparedStatement st = null;
-        try {
-            st = conn.prepareStatement("DELETE FROM carrinho WHERE id = ?");
-            st.setInt(1, id);
+        ResultSet rs = null;
 
-            int colunasAfetadas = st.executeUpdate();
-            if (colunasAfetadas == 0) {
+        try {
+            st = conn.prepareStatement("SELECT * FROM carrinho WHERE id = ?");
+            st.setInt(1, id);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                String nome = rs.getString("nome");
+                String categoria = rs.getString("categoria");
+                int quantidade = rs.getInt("quantidade");
+
+                st = conn.prepareStatement("DELETE FROM carrinho WHERE id = ?");
+                st.setInt(1, id);
+
+                int colunasAfetadas = st.executeUpdate();
+                if (colunasAfetadas == 0) {
+                    throw new DbException("Produto não encontrado no carrinho");
+                }
+
+                Produto produtoEstoque = estoqueDao.buscarPorNomeECategoria(nome, categoria);
+                if (produtoEstoque != null) {
+                    produtoEstoque.setQuantidade(produtoEstoque.getQuantidade() + quantidade);
+                    estoqueDao.alterar(produtoEstoque);
+                } else {
+                    throw new DbException("Produto não encontrado no estoque");
+                }
+
+            } else {
                 throw new DbException("Produto não encontrado no carrinho");
             }
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
             DB.closeStatement(st);
+            DB.closeResultSet(rs);
         }
     }
+
 
     @Override
     public Produto buscarPorId(Integer id) {

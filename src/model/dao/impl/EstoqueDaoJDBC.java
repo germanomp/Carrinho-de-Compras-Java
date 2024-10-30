@@ -3,7 +3,6 @@ package model.dao.impl;
 import db.DB;
 import db.DbException;
 import model.dao.EstoqueDao;
-import model.entities.Estoque;
 import model.entities.Produto;
 
 import java.sql.Connection;
@@ -84,6 +83,28 @@ public class EstoqueDaoJDBC implements EstoqueDao {
             throw new DbException(e.getMessage());
         } finally {
             DB.closeStatement(st);
+        }
+    }
+
+    public Produto buscarPorNomeECategoria(String nome, String categoria) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement("SELECT * FROM estoque WHERE nome = ? AND categoria = ?");
+            st.setString(1, nome);
+            st.setString(2, categoria);
+
+            rs = st.executeQuery();
+            if (rs.next()) {
+                return instanciarProduto(rs);
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
         }
     }
 

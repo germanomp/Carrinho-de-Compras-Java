@@ -10,5 +10,6 @@ public interface EstoqueDao {
     void alterar(Produto produto);
     void remover(Integer id);
     Produto buscarPorId(Integer id);
+    Produto buscarPorNomeECategoria(String nome, String categoria);
     List<Produto> listarEstoque();
 }
