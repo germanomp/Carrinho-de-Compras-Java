@@ -9,6 +9,7 @@ public class Produto {
     private String categoria;
     private Double valor;
     private Integer quantidade;
+    private Double valorTotal;
 
     public Produto() {}
 
@@ -17,7 +18,7 @@ public class Produto {
         this.nome = nome;
         this.categoria = categoria;
         this.valor = valor;
-        this.quantidade = quantidade;
+        setQuantidade(quantidade);
     }
 
     public Integer getId() {
@@ -57,25 +58,39 @@ public class Produto {
     }
 
     public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
+        if (quantidade != null && quantidade >= 0) {
+            this.quantidade = quantidade;
+        } else {
+            this.quantidade = 0;
+        }
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Produto produto = (Produto) o;
-        return Objects.equals(id, produto.id);
+    public Double getValorTotal() {
+        return valorTotal;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public Double calcularValorTotal() {
+        return (valor != null && quantidade != null) ? valor * quantidade : 0.0;
     }
 
     @Override
     public String toString() {
         return "Produtos{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", valor=" + valor +
+                ", quantidade=" + quantidade +
+                ", valorTotal=" + calcularValorTotal() +
+                '}';
+    }
+
+    public String toStringSemValorTotal() {
+        return "Produto{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", categoria='" + categoria + '\'' +

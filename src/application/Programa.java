@@ -13,91 +13,143 @@ public class Programa {
     public static void main(String[] args) {
 
         EstoqueDao estoqueDao = DaoLoja.criarEstoqueDao();
-
         CarrinhoDao carrinhoDao = DaoLoja.criarCarrinhoDao();
 
         Scanner sc = new Scanner(System.in);
 
+        boolean running = true;
+        while (running) {
+            System.out.println("=== Menu ===");
+            System.out.println("1. Listar produtos em estoque");
+            System.out.println("2. Listar produtos no carrinho");
+            System.out.println("3. Adicionar produto ao carrinho");
+            System.out.println("4. Atualizar quantidade no carrinho");
+            System.out.println("5. Remover produto do carrinho");
+            System.out.println("6. Adicionar produto ao estoque");
+            System.out.println("7. Alterar produto no estoque");
+            System.out.println("8. Remover produto do estoque");
+            System.out.println("0. Sair");
+            System.out.print("Escolha uma opção: ");
 
-        System.out.println("\n=== Test 3: Listar todo o estoque ===");
-        List<Produto> lista = estoqueDao.listarEstoque();
-        for (Produto p : lista) {
-            System.out.println(p);
+            int option = sc.nextInt();
+            switch (option) {
+                case 1:
+                    List<Produto> produtosEmEstoque = estoqueDao.listarEstoque();
+                    System.out.println("=== Produtos em Estoque ===");
+                    for (Produto produto : produtosEmEstoque) {
+                        System.out.println(produto.toStringSemValorTotal());
+                    }
+                    break;
+
+                case 2:
+                    List<Produto> carrinho = carrinhoDao.listarCarrinho();
+                    System.out.println("Produtos no carrinho:");
+                    double valorTotalCarrinho = 0;
+
+                    for (Produto p : carrinho) {
+                        System.out.println(p);
+                        valorTotalCarrinho += p.getValorTotal();
+                    }
+
+                    System.out.printf("Valor total do carrinho: R$ %.2f%n", valorTotalCarrinho);
+                    break;
+
+                case 3:
+                    System.out.print("Digite o ID do produto: ");
+                    int idProdutoAdicionar = sc.nextInt();
+                    System.out.print("Digite a quantidade: ");
+                    int quantidadeAdicionar = sc.nextInt();
+                    Produto produtoAdicionar = estoqueDao.buscarPorId(idProdutoAdicionar);
+                    if (produtoAdicionar != null) {
+                        produtoAdicionar.setQuantidade(quantidadeAdicionar);
+                        carrinhoDao.inserir(produtoAdicionar);
+                        System.out.println("Produto adicionado ao carrinho.");
+                    } else {
+                        System.out.println("Produto não encontrado no estoque.");
+                    }
+                    break;
+
+                case 4:
+                    System.out.print("Digite o ID do produto no carrinho: ");
+                    int idProdutoAtualizar = sc.nextInt();
+                    System.out.print("Digite a nova quantidade: ");
+                    int novaQuantidade = sc.nextInt();
+                    Produto produtoAtualizar = new Produto();
+                    produtoAtualizar.setId(idProdutoAtualizar);
+                    produtoAtualizar.setQuantidade(novaQuantidade);
+                    carrinhoDao.atualizarQuantidade(produtoAtualizar);
+                    System.out.println("Quantidade atualizada.");
+                    break;
+
+                case 5:
+                    System.out.print("Digite o ID do produto a remover: ");
+                    int idProdutoRemover = sc.nextInt();
+                    carrinhoDao.remover(idProdutoRemover);
+                    System.out.println("Produto removido do carrinho.");
+                    break;
+
+                case 6:
+                    System.out.print("Digite o nome do produto: ");
+                    sc.nextLine();
+                    String nomeProdutoAdicionar = sc.nextLine();
+                    System.out.print("Digite a categoria do produto: ");
+                    String categoriaProdutoAdicionar = sc.nextLine();
+                    System.out.print("Digite o valor do produto: ");
+                    double valorProdutoAdicionar = sc.nextDouble();
+                    System.out.print("Digite a quantidade do produto: ");
+                    int quantidadeProdutoAdicionar = sc.nextInt();
+
+                    Produto novoProduto = new Produto(null, nomeProdutoAdicionar, categoriaProdutoAdicionar, valorProdutoAdicionar, quantidadeProdutoAdicionar);
+                    estoqueDao.inserir(novoProduto);
+                    System.out.println("Produto adicionado ao estoque.");
+                    break;
+
+                case 7:
+                    System.out.print("Digite o ID do produto a atualizar: ");
+                    int idProdutoAtualizarEstoque = sc.nextInt();
+                    Produto produtoParaAtualizar = estoqueDao.buscarPorId(idProdutoAtualizarEstoque);
+                    if (produtoParaAtualizar != null) {
+                        System.out.print("Digite o novo nome do produto: ");
+                        sc.nextLine();
+                        String novoNome = sc.nextLine();
+                        System.out.print("Digite a nova categoria do produto: ");
+                        String novaCategoria = sc.nextLine();
+                        System.out.print("Digite o novo valor do produto: ");
+                        double novoValor = sc.nextDouble();
+                        System.out.print("Digite a nova quantidade do produto: ");
+                        int novaQuantidadeEstoque = sc.nextInt();
+
+                        produtoParaAtualizar.setNome(novoNome);
+                        produtoParaAtualizar.setCategoria(novaCategoria);
+                        produtoParaAtualizar.setValor(novoValor);
+                        produtoParaAtualizar.setQuantidade(novaQuantidadeEstoque);
+                        estoqueDao.alterar(produtoParaAtualizar);
+                        System.out.println("Produto atualizado no estoque.");
+                    } else {
+                        System.out.println("Produto não encontrado no estoque.");
+                    }
+                    break;
+
+                case 8:
+                    System.out.print("Digite o ID do produto a remover: ");
+                    int idProdutoRemoverEstoque = sc.nextInt();
+                    estoqueDao.remover(idProdutoRemoverEstoque);
+                    System.out.println("Produto removido do estoque.");
+                    break;
+
+                case 0:
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+            System.out.println();
         }
 
-        System.out.println("\n=== Test 3: Listar todo o carrinho ===");
-        List<Produto> lista2 = carrinhoDao.listarCarrinho();
-        for (Produto p : lista2) {
-            System.out.println(p);
-        }
-
-        //System.out.println("teste inserir produto carrinho");
-        //Produto novoProduto = new Produto(1, "Celular", "Eletrônicos", 1000.0, 1);
-        //carrinhoDao.inserir(novoProduto);
-        //System.out.println("Produto inserido. ID = " + novoProduto.getId());
-
-
-        System.out.println("alterar produto carrinho");
-        Produto produto = carrinhoDao.buscarPorId(3);
-        if (produto != null) {
-            produto.setQuantidade(1);
-            carrinhoDao.atualizarQuantidade(produto);
-            System.out.println("Produto alterado com sucesso.");
-        } else {
-            System.out.println("Produto não encontrado.");
-        }
-/*
-
-        System.out.println("\n=== Test 6: deletar produto ===");
-        System.out.print("Digite o Id do produto a deletar: ");
-        int id = sc.nextInt();
-        carrinhoDao.remover(id);
-        System.out.println("removido");
-*/
-
-
-
-
-        //System.out.println("=== Test 1: produto buscaPorId ===");
-        //Produto produto = carrinhoDao.buscarPorId(1);
-        //System.out.println(produto);
-
-        //estoqueDao.inserir(new Produto(null, "Produto A", "Categoria A", 10.0, 5));
-        //estoqueDao.inserir(new Produto(null, "Produto B", "Categoria B", 15.0, 2));
-
-
-        //System.out.println("=== Test 1: produto buscaPorId ===");
-        //Produto produto = estoqueDao.buscarPorId(2);
-        //System.out.println(produto);
-
-        /*
-        System.out.println("teste inserir produto estoque");
-        Produto novoProduto = new Produto(null, "teste", "categoriateste", 200.0, 5);
-        estoqueDao.inserir(novoProduto);
-        System.out.println("Produto inserido. ID = " + novoProduto.getId());
-        */
-        /*
-        System.out.println("alterar produto estoque");
-        Produto produto = estoqueDao.buscarPorId(2);
-        if (produto != null) {
-            produto.setValor(2500.0);
-            estoqueDao.alterar(produto);
-            System.out.println("Produto alterado com sucesso.");
-        } else {
-            System.out.println("Produto não encontrado.");
-        }
-         */
-
-        /*
-        System.out.println("\n=== Test 6: deletar produto ===");
-        System.out.print("Digite o Id do produto a deletar: ");
-        int id = sc.nextInt();
-        estoqueDao.remover(id);
-        System.out.println("removido");
-        */
 
         sc.close();
-
+        System.out.println("Programa encerrado.");
     }
 
 }
