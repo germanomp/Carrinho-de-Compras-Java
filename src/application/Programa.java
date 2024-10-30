@@ -19,11 +19,11 @@ public class Programa {
         Scanner sc = new Scanner(System.in);
 
 
-        //System.out.println("\n=== Test 3: Listar todo o estoque ===");
-        //List<Produto> lista = estoqueDao.listarEstoque();
-        //for (Produto p : lista) {
-        //    System.out.println(p);
-        //}
+        System.out.println("\n=== Test 3: Listar todo o estoque ===");
+        List<Produto> lista = estoqueDao.listarEstoque();
+        for (Produto p : lista) {
+            System.out.println(p);
+        }
 
         System.out.println("\n=== Test 3: Listar todo o carrinho ===");
         List<Produto> lista2 = carrinhoDao.listarCarrinho();
@@ -31,7 +31,12 @@ public class Programa {
             System.out.println(p);
         }
 
+        //System.out.println("teste inserir produto carrinho");
+        //Produto novoProduto = new Produto(1, "Celular", "Eletrônicos", 1000.0, 1);
+        //carrinhoDao.inserir(novoProduto);
+        //System.out.println("Produto inserido. ID = " + novoProduto.getId());
 
+        /*
         System.out.println("alterar produto carrinho");
         Produto produto = carrinhoDao.buscarPorId(2);
         if (produto != null) {
@@ -42,16 +47,15 @@ public class Programa {
             System.out.println("Produto não encontrado.");
         }
 
+
         System.out.println("\n=== Test 6: deletar produto ===");
         System.out.print("Digite o Id do produto a deletar: ");
         int id = sc.nextInt();
         carrinhoDao.remover(id);
         System.out.println("removido");
+*/
 
-        //System.out.println("teste inserir produto carrinho");
-        //Produto novoProduto = new Produto(null, "teste", "categoriateste", 200.0, 5);
-        //carrinhoDao.inserir(novoProduto);
-        //System.out.println("Produto inserido. ID = " + novoProduto.getId());
+
 
 
         //System.out.println("=== Test 1: produto buscaPorId ===");

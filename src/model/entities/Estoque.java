@@ -1,7 +1,5 @@
 package model.entities;
 
-import java.util.Objects;
-
 public class Estoque {
 
     private Integer id;

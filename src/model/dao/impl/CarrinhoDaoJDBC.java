@@ -3,6 +3,8 @@ package model.dao.impl;
 import db.DB;
 import db.DbException;
 import model.dao.CarrinhoDao;
+import model.dao.DaoLoja;
+import model.dao.EstoqueDao;
 import model.entities.Produto;
 
 import java.sql.Connection;
@@ -20,34 +22,75 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
         this.conn = conn;
     }
 
-
     @Override
     public void inserir(Produto produto) {
+        EstoqueDao estoqueDao = DaoLoja.criarEstoqueDao();
+        Produto produtoEstoque = estoqueDao.buscarPorId(produto.getId());
+
+        if (produtoEstoque == null || produtoEstoque.getQuantidade() < produto.getQuantidade()) {
+            throw new DbException("Produto inexistente no estoque ou quantidade insuficiente.");
+        }
+
         PreparedStatement st = null;
         try {
-            st = conn.prepareStatement("INSERT INTO carrinho (nome, categoria, valor, quantidade) VALUES (?,?,?,?)",
-                    PreparedStatement.RETURN_GENERATED_KEYS);
+            Produto produtoCarrinho = buscarPorNomeECategoria(produto.getNome(), produto.getCategoria());
 
-            st.setString(1, produto.getNome());
-            st.setString(2, produto.getCategoria());
-            st.setDouble(3, produto.getValor());
-            st.setInt(4, produto.getQuantidade());
-
-            int colunasAfetadas = st.executeUpdate();
-            if (colunasAfetadas > 0) {
-                ResultSet rs = st.getGeneratedKeys();
-                if(rs.next()) {
-                    int id = rs.getInt(1);
-                    produto.setId(id);
-                }
-                DB.closeResultSet(rs);
+            if (produtoCarrinho != null) {
+                int novaQuantidade = produtoCarrinho.getQuantidade() + produto.getQuantidade();
+                produtoCarrinho.setQuantidade(novaQuantidade);
+                atualizarQuantidade(produtoCarrinho);
             } else {
-                throw new DbException("Erro ao inserir no carrinho");
+                st = conn.prepareStatement(
+                        "INSERT INTO carrinho (nome, categoria, valor, quantidade) VALUES (?,?,?,?)",
+                        PreparedStatement.RETURN_GENERATED_KEYS
+                );
+
+                st.setString(1, produto.getNome());
+                st.setString(2, produto.getCategoria());
+                st.setDouble(3, produto.getValor());
+                st.setInt(4, produto.getQuantidade());
+
+                int rowsAffected = st.executeUpdate();
+                if (rowsAffected > 0) {
+                    ResultSet rs = st.getGeneratedKeys();
+                    if (rs.next()) {
+                        produto.setId(rs.getInt(1));
+                    }
+                    DB.closeResultSet(rs);
+                } else {
+                    throw new DbException("Erro ao inserir produto no carrinho");
+                }
             }
+
+            produtoEstoque.setQuantidade(produtoEstoque.getQuantidade() - produto.getQuantidade());
+            estoqueDao.alterar(produtoEstoque);
+
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
             DB.closeStatement(st);
+        }
+    }
+
+    private Produto buscarPorNomeECategoria(String nome, String categoria) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement("SELECT * FROM carrinho WHERE nome = ? AND categoria = ?");
+            st.setString(1, nome);
+            st.setString(2, categoria);
+
+            rs = st.executeQuery();
+            if (rs.next()) {
+                return instanciarProduto(rs);
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
         }
     }
 
