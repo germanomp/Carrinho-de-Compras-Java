@@ -96,22 +96,51 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
 
     @Override
     public void atualizarQuantidade(Produto produto) {
+        EstoqueDao estoqueDao = DaoLoja.criarEstoqueDao();
+        Produto produtoCarrinho = buscarPorId(produto.getId());
+        if (produtoCarrinho == null) {
+            throw new DbException("Produto não encontrado no carrinho");
+        }
+
+        Produto produtoEstoque = estoqueDao.buscarPorNomeECategoria(produtoCarrinho.getNome(), produtoCarrinho.getCategoria());
+        if (produtoEstoque == null) {
+            throw new DbException("Produto não encontrado no estoque");
+        }
+
+        int quantidadeAtual = produtoCarrinho.getQuantidade();
+        int novaQuantidade = produto.getQuantidade();
+        int diferencaQuantidade = novaQuantidade - quantidadeAtual;
+
+        if (diferencaQuantidade > 0) {
+            if (produtoEstoque.getQuantidade() < diferencaQuantidade) {
+                throw new DbException("Estoque insuficiente para a quantidade desejada");
+            }
+            produtoEstoque.setQuantidade(produtoEstoque.getQuantidade() - diferencaQuantidade);
+        } else if (diferencaQuantidade < 0) {
+            produtoEstoque.setQuantidade(produtoEstoque.getQuantidade() - diferencaQuantidade);
+        }
+
         PreparedStatement st = null;
         try {
             st = conn.prepareStatement("UPDATE carrinho SET quantidade = ? WHERE id = ?");
-            st.setInt(1, produto.getQuantidade());
+            st.setInt(1, novaQuantidade);
             st.setInt(2, produto.getId());
 
             int colunasAfetadas = st.executeUpdate();
             if (colunasAfetadas == 0) {
-                throw new DbException("Produto não encontrado no carrinho");
+                throw new DbException("Erro ao atualizar quantidade no carrinho");
             }
+
+            estoqueDao.alterar(produtoEstoque);
+
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
             DB.closeStatement(st);
         }
     }
+
+
 
     @Override
     public void remover(Integer id) {

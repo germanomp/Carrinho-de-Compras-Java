@@ -36,17 +36,17 @@ public class Programa {
         //carrinhoDao.inserir(novoProduto);
         //System.out.println("Produto inserido. ID = " + novoProduto.getId());
 
-        /*
+
         System.out.println("alterar produto carrinho");
-        Produto produto = carrinhoDao.buscarPorId(2);
+        Produto produto = carrinhoDao.buscarPorId(3);
         if (produto != null) {
-            produto.setQuantidade(10);
+            produto.setQuantidade(1);
             carrinhoDao.atualizarQuantidade(produto);
             System.out.println("Produto alterado com sucesso.");
         } else {
             System.out.println("Produto não encontrado.");
         }
-
+/*
 
         System.out.println("\n=== Test 6: deletar produto ===");
         System.out.print("Digite o Id do produto a deletar: ");
