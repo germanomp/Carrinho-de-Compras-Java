@@ -219,14 +219,19 @@ public class CarrinhoDaoJDBC implements CarrinhoDao {
     public List<Produto> listarCarrinho() {
         PreparedStatement st = null;
         ResultSet rs = null;
+        List<Produto> lista = new ArrayList<>();
         try {
-            st = conn.prepareStatement("SELECT * FROM carrinho");
+            st = conn.prepareStatement("SELECT id, nome, categoria, valor, quantidade, (valor * quantidade) AS valor_total FROM carrinho");
             rs = st.executeQuery();
-
-            List<Produto> lista = new ArrayList<>();
-
             while (rs.next()) {
-                Produto produto = instanciarProduto(rs);
+                Produto produto = new Produto(
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("categoria"),
+                        rs.getDouble("valor"),
+                        rs.getInt("quantidade")
+                );
+                produto.setValorTotal(rs.getDouble("valor_total"));
                 lista.add(produto);
             }
             return lista;
