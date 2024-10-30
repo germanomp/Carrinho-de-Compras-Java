@@ -96,9 +96,9 @@ Antes de executar a aplicação, você precisa configurar a conexão com o banco
    - Certifique-se de que o arquivo `db.properties` esteja na pasta correta do seu projeto. Esse arquivo deve conter as seguintes configurações:
 
    ```properties
-   user=developer
-   password=1234567
-   url=jdbc:mysql://127.0.0.1:3306/desafio
+   user="Seu usuário"
+   password="Sua senha"
+   url=jdbc:mysql://127.0.0.1:3306/"nomedobanco"
    useSSL=false
 
 ## Executar a Aplicação:
