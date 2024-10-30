@@ -62,6 +62,7 @@ src │
 Crie um banco de dados em seu SGBD preferido e configure as tabelas necessárias (estoque e carrinho).
 
 **SQL para gerar as tabelas**
+
 -- Tabela Carrinho de Compras
 
 CREATE TABLE carrinho (
