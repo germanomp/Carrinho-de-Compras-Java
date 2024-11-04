@@ -105,6 +105,9 @@ Antes de executar a aplicação, você precisa configurar a conexão com o banco
    url=jdbc:mysql://127.0.0.1:3306/desafio
    useSSL=false
 
+1. **Arquivo de Conexão do Java com o MySQL**
+   - Certifique-se de que o projeto tenha o arquivo de conexão do Java com o MySQL nas dependências.
+     
 ## Executar a Aplicação:
 
 Compile e execute a classe Programa.java.
